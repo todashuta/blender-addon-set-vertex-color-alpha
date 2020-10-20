@@ -41,15 +41,15 @@ def set_all_face_vertex_color_alpha(context, alpha_vaule):
             i += 1
 
 
-def main(context, alpha_vaule):
-    obj = context.active_object
-    if obj is None:
-        return
-    if obj.type != 'MESH':
-        return
-    if obj.mode != 'VERTEX_PAINT':
-        return
+def _poll(context):
+    ob = context.active_object
+    return ob is not None and ob.type == 'MESH' and ob.mode == 'VERTEX_PAINT'
 
+
+def main(context, alpha_vaule):
+    assert _poll(context), "Invalid Context"
+
+    obj = context.active_object
     mesh = obj.data
     if mesh.use_paint_mask:
         set_face_vertex_color_alpha(context, alpha_vaule)
@@ -65,14 +65,7 @@ class SET_VERTEX_COLOR_ALPHA_OT_main(bpy.types.Operator):
 
     @classmethod
     def poll(cls, context):
-        obj = context.active_object
-        if obj is None:
-            return False
-        if obj.type != 'MESH':
-            return False
-        if obj.mode != 'VERTEX_PAINT':
-            return False
-        return True
+        return _poll(context)
 
     def execute(self, context):
         main(context, context.scene.set_vertex_color_alpha_alpha_value)
@@ -87,14 +80,7 @@ class SET_VERTEX_COLOR_ALPHA_PT_panel(bpy.types.Panel):
 
     @classmethod
     def poll(self, context):
-        obj = context.active_object
-        if obj is None:
-            return False
-        if obj.type != 'MESH':
-            return False
-        if obj.mode != 'VERTEX_PAINT':
-            return False
-        return True
+        return _poll(context)
 
     def draw(self, context):
         scene = context.scene
