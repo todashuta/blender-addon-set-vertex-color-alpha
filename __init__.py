@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Set Vertex Color Alpha",
     "author": "todashuta",
-    "version": (1, 0, 0),
+    "version": (1, 1, 0),
     "blender": (2, 80, 0),
     "location": "3D View > Side Bar > Paint",
     "description": "",

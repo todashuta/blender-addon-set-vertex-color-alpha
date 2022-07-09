@@ -62,14 +62,26 @@ def main(context, alpha_vaule):
 class SET_VERTEX_COLOR_ALPHA_OT_main(bpy.types.Operator):
     bl_idname = "object.set_vertex_color_alpha"
     bl_label = "Set Vertex Color Alpha"
+    bl_options = {"REGISTER", "UNDO"}
+
+    alpha: bpy.props.FloatProperty(
+        name="Alpha",
+        min=0.0,
+        max=1.0,
+        default=0.0,
+    )
 
     @classmethod
     def poll(cls, context):
         return _poll(context)
 
     def execute(self, context):
-        main(context, context.scene.set_vertex_color_alpha_alpha_value)
+        main(context, self.alpha)
         return {'FINISHED'}
+
+    def invoke(self, context, event):
+        self.alpha = context.scene.set_vertex_color_alpha_alpha_value
+        return self.execute(context)
 
 
 class SET_VERTEX_COLOR_ALPHA_PT_panel(bpy.types.Panel):
