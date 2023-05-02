@@ -1,3 +1,17 @@
+bl_info = {
+    "name": "Set Vertex Color Alpha",
+    "author": "todashuta",
+    "version": (1, 1, 1),
+    "blender": (2, 93, 0),
+    "location": "3D View > Side Bar > Paint",
+    "description": "",
+    "warning": "",
+    "wiki_url": "",
+    "tracker_url": "https://github.com/todashuta/blender-addon-set-vertex-color-alpha/issues",
+    "category": "Paint"
+}
+
+
 import bpy
 
 
@@ -121,3 +135,7 @@ def unregister():
 
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
+
+
+if __name__ == "__main__":
+    register()
